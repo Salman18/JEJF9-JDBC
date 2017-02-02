@@ -1,4 +1,4 @@
-# JEJF9-JDBC
+#JDBC STEPS
 JDBC Process Includes:-
  1.Loading and Registering the DriverClass.
  2.Establishing Connection.
