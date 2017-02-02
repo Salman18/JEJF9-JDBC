@@ -67,10 +67,11 @@ public class SavepointsDemo {
 			
 		} catch (ClassNotFoundException |SQLException e) {
 			e.printStackTrace();
-			System.out.println("Rollback happened");
+			
 			try {
 				con.rollback(sp1);
 				con.commit();
+				System.out.println("Rollback happened");
 				con.rollback(sp2);
 				con.commit();
 				
