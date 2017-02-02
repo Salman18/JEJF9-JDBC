@@ -15,7 +15,8 @@ public class SavepointsDemo {
 		Connection con=null;
 		PreparedStatement pstmt1=null;
 		PreparedStatement pstmt2=null;
-		Savepoint sp=null;
+		Savepoint sp1=null;
+		Savepoint sp2=null;
 		
 		
 		String Query1="insert into jejf9.student_info values(?,?,?)";
@@ -47,7 +48,7 @@ public class SavepointsDemo {
 			pstmt1.setString(3, Place);
 			
 			 int i=pstmt1.executeUpdate();
-			  sp= con.setSavepoint();
+			  sp1= con.setSavepoint();
 			 System.out.println("Number of Records of Affected.."+i);
 
 			 
@@ -58,36 +59,32 @@ public class SavepointsDemo {
 			
 			
 			 i=pstmt2.executeUpdate();
-			 sp= con.setSavepoint();
+			 sp2= con.setSavepoint();
 			 System.out.println("Number of Records of Affected.."+i);
 			 
 			 
 			 con.commit();
 			
-		} catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException |SQLException e) {
 			e.printStackTrace();
 			System.out.println("Rollback happened");
-			
-		} 
-		catch (SQLException e) {
-      if(con!= null)
-        {
-	   			
-			try 
-			{
-				con.rollback(sp);
+			try {
+				con.rollback(sp1);
 				con.commit();
-			} 
-			catch (SQLException e1) 
+				con.rollback(sp2);
+				con.commit();
+				
+			     }
+			catch (SQLException e1)
 			{
 				
 				e1.printStackTrace();
-			
 			}
-         }//end of if
 			
-			e.printStackTrace();
-		}//end of SQL catch Block
+			
+		} 
+		
+		
 		finally{
 			if(pstmt2!= null){
 	           			
